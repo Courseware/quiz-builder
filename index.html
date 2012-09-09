@@ -35,7 +35,43 @@
       <div class="row">
         <div class="twelve columns">
 
-          <div id="demo"></div>
+          <div id="demo" data-quiz="auto">
+            <h5>
+              Create a new question with:
+            </h5>
+            <a href="#" class="quiz-new-text small button radius">Single Answer</a>
+            <a href="#" class="quiz-new-radios small button radius">Multiple Options &ndash; One Answer</a>
+            <a href="#" class="quiz-new-checkboxes small button radius">Multiple Options &ndash; Multiple Answers</a>
+
+            <div class="quiz-text template" style="display: none">
+              <h6>Question:</h6>
+              <textarea name="$text-question">Question</textarea>
+              <textarea name="$text-answer">Answer</textarea>
+              <hr/>
+            </div>
+
+            <div class="quiz-radios template" style="display: none">
+              <h6>Question:</h6>
+              <textarea name="$radios-question">Question</textarea>
+              <p>
+                <input type="radio" name="$radios-answer" value="$radio-answer" id="$radio-answer">
+                <label for="$radio-answer">Answer</label>
+                <a href="#" class="button tiny radius alert">&times;</a>
+              </p>
+              <hr/>
+            </div>
+
+            <div class="quiz-checkboxes template" style="display: none">
+              <h6>Question:</h6>
+              <textarea name="$checkboxes-question">Question</textarea>
+              <p>
+                <input type="checkbox" name="$checkboxes-answer" value="$checkboxes-answer" id="$checkboxes-answer">
+                <label for="$checkboxes-answer">Answer</label>
+                <a href="#" class="button tiny radius alert">&times;</a>
+              </p>
+              <hr/>
+            </div>
+          </div>
 
         </div>
       </div>
