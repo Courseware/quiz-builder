@@ -44,17 +44,19 @@
             <a href="#" class="quiz-new-checkboxes small button radius">Multiple Options &ndash; Multiple Answers</a>
 
             <div class="quiz-text template" style="display: none">
-              <h6>Question:</h6>
+              <a href="#" class="button tiny radius alert delete">&times;</a>
+
               <textarea name="$text-question">Question</textarea>
               <textarea name="$text-answer">Answer</textarea>
               <hr>
             </div>
 
             <div class="quiz-radios template" style="display: none">
-              <h6>Question:</h6>
+              <a href="#" class="button tiny radius alert delete">&times;</a>
+
               <textarea name="$radios-question">Question</textarea>
 
-              <a href="#" class="button tiny radius success duplicate">&plus;</a>
+              <a href="#" class="button tiny radius success add">&plus;</a>
 
               <p>
                 <input type="radio" name="$radios-answer" value="$radio-answer" id="$radio-answer">
@@ -67,10 +69,11 @@
             </div>
 
             <div class="quiz-checkboxes template" style="display: none">
-              <h6>Question:</h6>
+              <a href="#" class="button tiny radius alert delete">&times;</a>
+
               <textarea name="$checkboxes-question">Question</textarea>
 
-              <a href="#" class="button tiny radius success duplicate">&plus;</a>
+              <a href="#" class="button tiny radius success add">&plus;</a>
 
               <p>
                 <input type="checkbox" name="$checkboxes-answer" value="$checkboxes-answer" id="$checkboxes-answer">

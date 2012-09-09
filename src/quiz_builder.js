@@ -1,3 +1,8 @@
+/**
+ * jQuery Quiz Builder Plugin - v.0.1
+ *
+ * (c) 2012, Coursewa.re
+ */
 ;(function ( $, window, undefined ) {
   var pluginName = 'quizBuilder',
       document = window.document,
@@ -14,7 +19,9 @@
         }
       };
 
-  // Plugin Constructor
+  /**
+   * Constructor
+   */
   function QuizBuilder( element, options ) {
     this.element = element;
 
@@ -26,9 +33,16 @@
     this.controls();
   }
 
+  /**
+   * Prototype definition
+   */
   QuizBuilder.prototype = {
     constructor: QuizBuilder,
 
+    /**
+     * Handles addition of one option/one answer questions
+     * @param event, Object
+     */
     textHandler: function( event ) {
       var self = event.data;
       var tmpl = $( self.options.templates.text ).clone();
@@ -36,6 +50,10 @@
       $( self.element ).append( tmpl );
     },
 
+    /**
+     * Handles addition of multiple options/one answer questions
+     * @param event, Object
+     */
     radiosHandler: function( event ) {
       var self = event.data;
       var tmpl = $( self.options.templates.radios ).clone();
@@ -43,6 +61,10 @@
       $( self.element ).append( tmpl );
     },
 
+    /**
+     * Handles addition of multiple options/multiple answers questions
+     * @param event, Object
+     */
     checkboxesHandler: function( event ) {
       var self = event.data;
       var tmpl = $( self.options.templates.checkboxes ).clone();
@@ -50,28 +72,36 @@
       $( self.element ).append( tmpl );
     },
 
+    /**
+     * Handles answers removal, in case of radios/checkboxes
+     * @param event, Object
+     */
     removeAnswer: function( event ) {
-      var self = event.data;
-      if ( $(this).parents( 'p' ).size() > 0 ) {
-        $(this).parent( 'p' ).remove();
-      } else {
-        return;
-      }
+      $(this).parent( 'p' ).remove();
     },
 
-    duplicateAnswer: function( event ) {
-      var self = event.data,
-          parent = $(this).parent().find( 'p' ).clone();
-
-      if ( !!parent[0] ) {
-        parent = parent[0];
-        $(parent).find( 'input' ).val( '' );
-        $(this).after(parent);
-      } else {
-        return;
-      }
+    /**
+     * Handles question removal
+     * @param event, Object
+     */
+    deleteQuestion: function( event ) {
+      $(this).parent( 'div' ).remove();
     },
 
+    /**
+     * Handles answer addition, in case of radios/checkboxes
+     * @param event, Object
+     */
+    addAnswer: function( event ) {
+      var template = $(this).parent().attr( 'class' );
+      var answer = $( '.template.' + template + ' p' ).clone();
+      $(this).after(answer);
+    },
+
+    /**
+     * Binds up callbacks to main controls
+     * @param event, Object
+     */
     controls: function() {
       var self = this;
 
@@ -83,15 +113,19 @@
       // Bind radio/checkboxes deletion controls
       $.each( this.options.templates, function( key, ctrl ){
         var toRem = ctrl.replace( '.template', ' p .remove' );
-        var toDup = ctrl.replace( '.template', ' .duplicate' );
+        var toAdd = ctrl.replace( '.template', ' .add' );
+        var toDel = ctrl.replace( '.template', ' .delete' );
         $( self.element ).on( 'click', toRem, self, self[ 'removeAnswer' ] );
-        $( self.element ).on( 'click', toDup, self, self[ 'duplicateAnswer' ] );
+        $( self.element ).on( 'click', toAdd, self, self[ 'addAnswer' ] );
+        $( self.element ).on( 'click', toDel, self, self[ 'deleteQuestion' ] );
       });
     }
   }
 
-  // A really lightweight plugin wrapper around the constructor,
-  // preventing against multiple instantiations
+  /**
+   * A really lightweight plugin wrapper around the constructor,
+   * preventing against multiple instantiations
+   */
   $.fn[pluginName] = function ( options ) {
     return this.each(function () {
       if ( !$.data( this, 'quiz-options' ) ) {
@@ -100,6 +134,9 @@
     });
   }
 
+  /**
+   * Data API
+   */
   $(window).on('load', function () {
     $('[data-quiz="auto"]').each(function () {
       var $quiz = $(this);
