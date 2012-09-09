@@ -47,29 +47,39 @@
               <h6>Question:</h6>
               <textarea name="$text-question">Question</textarea>
               <textarea name="$text-answer">Answer</textarea>
-              <hr/>
+              <hr>
             </div>
 
             <div class="quiz-radios template" style="display: none">
               <h6>Question:</h6>
               <textarea name="$radios-question">Question</textarea>
+
+              <a href="#" class="button tiny radius success duplicate">&plus;</a>
+
               <p>
                 <input type="radio" name="$radios-answer" value="$radio-answer" id="$radio-answer">
-                <label for="$radio-answer">Answer</label>
-                <a href="#" class="button tiny radius alert">&times;</a>
+                <textarea name="$radios-answer">Answer</textarea>
+
+                <a href="#" class="button tiny radius alert remove">&times;</a>
               </p>
-              <hr/>
+
+              <hr>
             </div>
 
             <div class="quiz-checkboxes template" style="display: none">
               <h6>Question:</h6>
               <textarea name="$checkboxes-question">Question</textarea>
+
+              <a href="#" class="button tiny radius success duplicate">&plus;</a>
+
               <p>
                 <input type="checkbox" name="$checkboxes-answer" value="$checkboxes-answer" id="$checkboxes-answer">
-                <label for="$checkboxes-answer">Answer</label>
-                <a href="#" class="button tiny radius alert">&times;</a>
+                <textarea name="$checkboxes-answer">Answer</textarea>
+
+                <a href="#" class="button tiny radius alert remove">&times;</a>
               </p>
-              <hr/>
+
+              <hr>
             </div>
           </div>
 
