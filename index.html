@@ -43,44 +43,92 @@
             <a href="#" class="quiz-new-radios small button radius">Multiple Options &ndash; One Answer</a>
             <a href="#" class="quiz-new-checkboxes small button radius">Multiple Options &ndash; Multiple Answers</a>
 
-            <div class="quiz-text template" style="display: none">
-              <a href="#" class="button tiny radius alert delete">&times;</a>
+            <hr>
 
-              <textarea name="$text-question">Question</textarea>
-              <textarea name="$text-answer">Answer</textarea>
+            <div class="quiz-text template question row" style="display: none">
+              <div class="eleven columns question-content">
+                <textarea name="$text-question">Question</textarea>
+
+                <div class="row option">
+                  <div class="option-content">
+                    <textarea name="$text-answer">Answer</textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="one columns">
+                <p>
+                <a href="#" class="button tiny radius alert delete">&times;</a>
+                </p>
+                <p>
+                <a href="#" class="button tiny radius secondary up">&uarr;</a>
+                <a href="#" class="button tiny radius secondary down">&darr;</a>
+                </p>
+              </div>
               <hr>
             </div>
 
-            <div class="quiz-radios template" style="display: none">
-              <a href="#" class="button tiny radius alert delete">&times;</a>
+            <div class="quiz-radios template question row" style="display: none">
+              <div class="eleven columns question-content">
+                <textarea name="$radios-question">Question</textarea>
 
-              <textarea name="$radios-question">Question</textarea>
+                <div class="row option">
+                  <div class="one columns option-validation">
+                    <input type="radio" name="$radios-answer" value="$radio-answer" id="$radio-answer">
+                  </div>
 
-              <a href="#" class="button tiny radius success add">&plus;</a>
+                  <div class="ten columns option-content">
+                    <textarea name="$radios-answer">Answer</textarea>
+                  </div>
 
-              <p>
-                <input type="radio" name="$radios-answer" value="$radio-answer" id="$radio-answer">
-                <textarea name="$radios-answer">Answer</textarea>
-
-                <a href="#" class="button tiny radius alert remove">&times;</a>
-              </p>
-
+                  <div class="one columns">
+                    <a href="#" class="button tiny radius alert remove">&times;</a>
+                  </div>
+                </div>
+              </div>
+              <div class="one columns">
+                <p>
+                <a href="#" class="button tiny radius alert delete">&times;</a>
+                </p>
+                <p>
+                  <a href="#" class="button tiny radius success add">&plus;</a>
+                </p>
+                <p>
+                <a href="#" class="button tiny radius secondary up">&uarr;</a>
+                <a href="#" class="button tiny radius secondary down">&darr;</a>
+                </p>
+              </div>
               <hr>
             </div>
 
-            <div class="quiz-checkboxes template" style="display: none">
-              <a href="#" class="button tiny radius alert delete">&times;</a>
+            <div class="quiz-checkboxes template question row" style="display: none">
+              <div class="eleven columns question-content">
+                <textarea name="$checkboxes-question">Question</textarea>
 
-              <textarea name="$checkboxes-question">Question</textarea>
-
-              <a href="#" class="button tiny radius success add">&plus;</a>
-
-              <p>
-                <input type="checkbox" name="$checkboxes-answer" value="$checkboxes-answer" id="$checkboxes-answer">
-                <textarea name="$checkboxes-answer">Answer</textarea>
-
-                <a href="#" class="button tiny radius alert remove">&times;</a>
-              </p>
+                <div class="row option">
+                  <div class="one columns option-validation">
+                    <input type="checkbox" name="$checkboxes-answer" value="$checkboxes-answer" id="$checkboxes-answer">
+                  </div>
+                  <div class="ten columns option-content">
+                    <textarea name="$checkboxes-answer">Answer</textarea>
+                  </div>
+                  <div class="one columns">
+                    <a href="#" class="button tiny radius alert remove">&times;</a>
+                  </div>
+                </div>
+              </div>
+              <div class="one columns">
+                <p>
+                  <a href="#" class="button tiny radius alert delete">&times;</a>
+                </p>
+                <p>
+                  <a href="#" class="button tiny radius success add">&plus;</a>
+                </p>
+                <p>
+                  <a href="#" class="button tiny radius secondary up">&uarr;</a>
+                  <a href="#" class="button tiny radius secondary down">&darr;</a>
+                </p>
+              </div>
 
               <hr>
             </div>

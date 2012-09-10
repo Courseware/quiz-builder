@@ -77,7 +77,7 @@
      * @param event, Object
      */
     removeAnswer: function( event ) {
-      $(this).parent( 'p' ).remove();
+      $(this).parents( '.option' ).remove();
     },
 
     /**
@@ -85,7 +85,7 @@
      * @param event, Object
      */
     deleteQuestion: function( event ) {
-      $(this).parent( 'div' ).remove();
+      $(this).parents( '.question' ).remove();
     },
 
     /**
@@ -93,9 +93,10 @@
      * @param event, Object
      */
     addAnswer: function( event ) {
-      var template = $(this).parent().attr( 'class' );
-      var answer = $( '.template.' + template + ' p' ).clone();
-      $(this).after(answer);
+      var template = $(this).parents( '.question' ).attr( 'class' );
+      template = template.match( /quiz\-\w+/ )[0]
+      var answer = $( '.template.' + template + ' .option' ).clone();
+      $(this).parents( '.question' ).find( '.question-content' ).append(answer);
     },
 
     /**
@@ -112,7 +113,7 @@
 
       // Bind radio/checkboxes deletion controls
       $.each( this.options.templates, function( key, ctrl ){
-        var toRem = ctrl.replace( '.template', ' p .remove' );
+        var toRem = ctrl.replace( '.template', ' .remove' );
         var toAdd = ctrl.replace( '.template', ' .add' );
         var toDel = ctrl.replace( '.template', ' .delete' );
         $( self.element ).on( 'click', toRem, self, self[ 'removeAnswer' ] );
