@@ -36,6 +36,8 @@
         <div class="twelve columns">
 
           <div id="demo" data-quiz="auto">
+            <input type="hidden" id="quiz-store">
+
             <h5>
               Create a new question with:
             </h5>
@@ -47,11 +49,11 @@
 
             <div class="quiz-text template question row" style="display: none">
               <div class="eleven columns question-content">
-                <textarea name="$text-question">Question</textarea>
+                <textarea class="input">Question</textarea>
 
                 <div class="row option">
-                  <div class="option-content">
-                    <textarea name="$text-answer">Answer</textarea>
+                  <div class="twelve columns option-content">
+                    <textarea>Answer</textarea>
                   </div>
                 </div>
               </div>
@@ -60,25 +62,21 @@
                 <p>
                 <a href="#" class="button tiny radius alert delete">&times;</a>
                 </p>
-                <p>
-                <a href="#" class="button tiny radius secondary up">&uarr;</a>
-                <a href="#" class="button tiny radius secondary down">&darr;</a>
-                </p>
               </div>
               <hr>
             </div>
 
             <div class="quiz-radios template question row" style="display: none">
               <div class="eleven columns question-content">
-                <textarea name="$radios-question">Question</textarea>
+                <textarea name="$radios-question" class="input">Question</textarea>
 
                 <div class="row option">
                   <div class="one columns option-validation">
-                    <input type="radio" name="$radios-answer" value="$radio-answer" id="$radio-answer">
+                    <input type="radio">
                   </div>
 
                   <div class="ten columns option-content">
-                    <textarea name="$radios-answer">Answer</textarea>
+                    <textarea>Answer</textarea>
                   </div>
 
                   <div class="one columns">
@@ -93,24 +91,20 @@
                 <p>
                   <a href="#" class="button tiny radius success add">&plus;</a>
                 </p>
-                <p>
-                <a href="#" class="button tiny radius secondary up">&uarr;</a>
-                <a href="#" class="button tiny radius secondary down">&darr;</a>
-                </p>
               </div>
               <hr>
             </div>
 
             <div class="quiz-checkboxes template question row" style="display: none">
               <div class="eleven columns question-content">
-                <textarea name="$checkboxes-question">Question</textarea>
+                <textarea class="input">Question</textarea>
 
                 <div class="row option">
                   <div class="one columns option-validation">
-                    <input type="checkbox" name="$checkboxes-answer" value="$checkboxes-answer" id="$checkboxes-answer">
+                    <input type="checkbox">
                   </div>
                   <div class="ten columns option-content">
-                    <textarea name="$checkboxes-answer">Answer</textarea>
+                    <textarea>Answer</textarea>
                   </div>
                   <div class="one columns">
                     <a href="#" class="button tiny radius alert remove">&times;</a>
@@ -123,10 +117,6 @@
                 </p>
                 <p>
                   <a href="#" class="button tiny radius success add">&plus;</a>
-                </p>
-                <p>
-                  <a href="#" class="button tiny radius secondary up">&uarr;</a>
-                  <a href="#" class="button tiny radius secondary down">&darr;</a>
                 </p>
               </div>
 

@@ -7,6 +7,7 @@
   var pluginName = 'quizBuilder',
       document = window.document,
       defaults = {
+        store: '#quiz-store',
         controls: {
           text: '.quiz-new-text',
           radios: '.quiz-new-radios',
@@ -26,11 +27,21 @@
     this.element = element;
 
     this.options = $.extend( {}, defaults, options) ;
+    this.storeElement = $( this.options.store );
 
     this._defaults = defaults;
     this._name = pluginName;
 
     this.controls();
+    this.storeBindings();
+  }
+
+  /**
+   * Extends String object prototype to handle slug keys generation
+   * @return String
+   */
+  String.prototype.slug = function() {
+    return this.toLowerCase().replace( /[^\w ]+/g, '' ).replace( / +/g, '-' );
   }
 
   /**
@@ -38,6 +49,15 @@
    */
   QuizBuilder.prototype = {
     constructor: QuizBuilder,
+
+    store: function() {
+      return jQuery.parseJSON( this.storeElement.val() ) || [];
+    },
+
+    storeUpdate: function( data ) {
+      data = JSON.stringify( data );
+      this.storeElement.val( data );
+    },
 
     /**
      * Handles addition of one option/one answer questions
@@ -96,7 +116,59 @@
       var template = $(this).parents( '.question' ).attr( 'class' );
       template = template.match( /quiz\-\w+/ )[0]
       var answer = $( '.template.' + template + ' .option' ).clone();
-      $(this).parents( '.question' ).find( '.question-content' ).append(answer);
+      $(this).parents( '.question' ).find( '.question-content' ).append( answer );
+    },
+
+    storeQuestion: function( event ) {
+      var index;
+      var self = event.data;
+      var key = $(this).val().trim().slug();
+      var type = $(this).parents( '.question' ).attr( 'class' ).match( /quiz-(\w+)/ );
+      var store = self.store();
+      var question = {
+        type: type[1],
+        slug: key,
+        options: []
+      }
+
+      $(this).parent().find( '.option' ).each( function() {
+        var option = {};
+        var input = $( this ).find( '.option-validation input' );
+        var text = $( this ).find( '.option-content textarea' );
+        option[ 'type' ] = $( input ).attr( 'type' );
+        option[ 'valid' ] = !!$( input ).attr( 'checked' );
+        option[ 'content' ] = $( text ).val();
+
+        question.options.push(option);
+      });
+
+      for( var i=0; i < store.length; i++ ) {
+        if ( store[ i ].slug === key ) {
+          self.store[ i ] = question;
+          index = i;
+        }
+      }
+
+      if ( !index ) {
+        store.push( question );
+      }
+
+      self.storeUpdate( store );
+
+    },
+
+    /**
+     * Binds up events to store modifications
+     * @param event, Object
+     */
+    storeBindings: function( event ) {
+      var self = this;
+
+      // Bind questions and options to store
+      $.each( this.options.templates, function( key, ctrl ){
+        var question = ctrl.replace( '.template', ' .question-content .input' );
+        $( self.element ).on( 'change', question, self, self[ 'storeQuestion' ] );
+      });
     },
 
     /**
