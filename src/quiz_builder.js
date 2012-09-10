@@ -51,7 +51,7 @@
     constructor: QuizBuilder,
 
     store: function() {
-      return jQuery.parseJSON( this.storeElement.val() ) || [];
+      return $.parseJSON( this.storeElement.val() ) || [];
     },
 
     storeUpdate: function( data ) {
@@ -120,6 +120,7 @@
     },
 
     storeQuestion: function( event ) {
+      console.log(event)
       var index;
       var self = event.data;
       var key = $(this).val().trim().slug();
@@ -135,7 +136,6 @@
         var option = {};
         var input = $( this ).find( '.option-validation input' );
         var text = $( this ).find( '.option-content textarea' );
-        option[ 'type' ] = $( input ).attr( 'type' );
         option[ 'valid' ] = !!$( input ).attr( 'checked' );
         option[ 'content' ] = $( text ).val();
 
@@ -157,6 +157,10 @@
 
     },
 
+    storeQuestionTrigger: function() {
+      $(this).parents( '.question-content' ).find( '.input' ).trigger( 'change' );
+    },
+
     /**
      * Binds up events to store modifications
      * @param event, Object
@@ -168,6 +172,12 @@
       $.each( this.options.templates, function( key, ctrl ){
         var question = ctrl.replace( '.template', ' .question-content .input' );
         $( self.element ).on( 'change', question, self, self[ 'storeQuestion' ] );
+
+        var option = question.replace( '.input', ' .option textarea' );
+        $( self.element ).on( 'change', option, self, self[ 'storeQuestionTrigger' ] );
+
+        var validation = question.replace( '.input', ' .option input' );
+        $( self.element ).on( 'click', validation, self, self[ 'storeQuestionTrigger' ] );
       });
     },
 
