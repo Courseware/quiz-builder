@@ -102,6 +102,8 @@
      * @return Object, newly created element
      */
     textHandler: function( event ) {
+      if ( event['preventDefault'] ) { event.preventDefault() }
+
       var self = event.data;
       var tmpl = $( self.element ).find( self.options.templates.text ).clone();
       tmpl.removeClass( 'template' ).show();
@@ -125,6 +127,8 @@
      * @return Object, newly created element
      */
     radiosHandler: function( event ) {
+      if ( event['preventDefault'] ) { event.preventDefault() }
+
       var self = event.data;
       var tmpl = $( self.element ).find( self.options.templates.radios ).clone();
       tmpl.removeClass( 'template' ).show();
@@ -157,6 +161,8 @@
      * @return Object, newly created element
      */
     checkboxesHandler: function( event ) {
+      if ( event['preventDefault'] ) { event.preventDefault() }
+
       var self = event.data;
       var tmpl = $( self.element ).find( self.options.templates.checkboxes ).clone();
       tmpl.removeClass( 'template' ).show();
@@ -189,6 +195,7 @@
      */
     removeAnswer: function( event ) {
       $(this).parents( '.option' ).remove();
+      return false;
     },
 
     /**
@@ -197,6 +204,7 @@
      */
     deleteQuestion: function( event ) {
       $(this).parents( '.question' ).remove();
+      return false;
     },
 
     /**
@@ -205,6 +213,8 @@
      * @return Object, created element
      */
     addAnswer: function( event ) {
+      if ( event['preventDefault'] ) { event.preventDefault() }
+
       var self = event.data;
       var template = $(this).parents( '.question' ).attr( 'class' );
       template = template.match( /quiz\-\w+/ )[0]
