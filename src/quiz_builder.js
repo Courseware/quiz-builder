@@ -119,46 +119,41 @@
       $(this).parents( '.question' ).find( '.question-content' ).append( answer );
     },
 
-    storeQuestion: function( event ) {
-      console.log(event)
-      var index;
+    storeQuiz: function( event ) {
       var self = event.data;
-      var key = $(this).val().trim().slug();
-      var type = $(this).parents( '.question' ).attr( 'class' ).match( /quiz-(\w+)/ );
-      var store = self.store();
-      var question = {
-        type: type[1],
-        slug: key,
-        options: []
-      }
+      var store = [];
 
-      $(this).parent().find( '.option' ).each( function() {
-        var option = {};
-        var input = $( this ).find( '.option-validation input' );
-        var text = $( this ).find( '.option-content textarea' );
-        option[ 'valid' ] = !!$( input ).attr( 'checked' );
-        option[ 'content' ] = $( text ).val();
+      $(self.element).find( '.question-content' ).each( function(){
+        var question = $( this );
+        var entry = { options: [] };
 
-        question.options.push(option);
+        if ( question.parent().attr( 'class' ).match( /template/ ) ) {
+          return true;
+        }
+
+        entry['content'] = question.find( '.input' ).val();
+        entry['type'] = question.parent().attr( 'class' ).match( /quiz-(\w+)/ )[1];
+
+        question.find( '.option' ).each( function() {
+          var option = $( this );
+          var data = {};
+
+          if ( entry.type === 'text' ) {
+
+            data['valid'] = true;
+          } else {
+            data['valid'] = !!option.find( '.option-validation input' ).attr( 'checked' );
+          }
+
+          data['content'] = option.find( '.option-content textarea' ).val();
+
+          entry.options.push( data );
+        })
+
+        store.push( entry );
       });
 
-      for( var i=0; i < store.length; i++ ) {
-        if ( store[ i ].slug === key ) {
-          self.store[ i ] = question;
-          index = i;
-        }
-      }
-
-      if ( !index ) {
-        store.push( question );
-      }
-
       self.storeUpdate( store );
-
-    },
-
-    storeQuestionTrigger: function() {
-      $(this).parents( '.question-content' ).find( '.input' ).trigger( 'change' );
     },
 
     /**
@@ -171,13 +166,13 @@
       // Bind questions and options to store
       $.each( this.options.templates, function( key, ctrl ){
         var question = ctrl.replace( '.template', ' .question-content .input' );
-        $( self.element ).on( 'change', question, self, self[ 'storeQuestion' ] );
+        $( self.element ).on( 'change', question, self, self[ 'storeQuiz' ] );
 
         var option = question.replace( '.input', ' .option textarea' );
-        $( self.element ).on( 'change', option, self, self[ 'storeQuestionTrigger' ] );
+        $( self.element ).on( 'change', option, self, self[ 'storeQuiz' ] );
 
         var validation = question.replace( '.input', ' .option input' );
-        $( self.element ).on( 'click', validation, self, self[ 'storeQuestionTrigger' ] );
+        $( self.element ).on( 'click', validation, self, self[ 'storeQuiz' ] );
       });
     },
 
