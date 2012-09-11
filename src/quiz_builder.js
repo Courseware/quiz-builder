@@ -205,7 +205,6 @@
      * @return Object, created element
      */
     addAnswer: function( event ) {
-      console.log(this)
       var self = event.data;
       var template = $(this).parents( '.question' ).attr( 'class' );
       template = template.match( /quiz\-\w+/ )[0]
@@ -284,7 +283,7 @@
 
       // Bind main controls
       $.each( this.options.controls, function( key, ctrl ){
-        $( self.element ).on( 'click', ctrl, self, self[ key + 'Handler' ] );
+        $( ctrl ).on( 'click', self, self[ key + 'Handler' ] );
       });
 
       // Bind radio/checkboxes deletion controls
