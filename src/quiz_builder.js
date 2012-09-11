@@ -7,7 +7,8 @@
   var pluginName = 'quizBuilder',
       document = window.document,
       defaults = {
-        store: '#quiz-store',
+        store: '.quiz-store',
+        fromStore: false,
         controls: {
           text: '.quiz-new-text',
           radios: '.quiz-new-radios',
@@ -27,10 +28,14 @@
     this.element = element;
 
     this.options = $.extend( {}, defaults, options) ;
-    this.storeElement = $( this.options.store );
+    this.storeElement = $( this.element ).find( this.options.store );
 
     this._defaults = defaults;
     this._name = pluginName;
+
+    if ( this.options.fromStore ) {
+      this.loadFromStore();
+    }
 
     this.controls();
     this.storeBindings();
@@ -50,46 +55,132 @@
   QuizBuilder.prototype = {
     constructor: QuizBuilder,
 
+    /**
+     * Wrapper around storage element
+     * Loads and de-serializes quiz content
+     */
     store: function() {
       return $.parseJSON( this.storeElement.val() ) || [];
     },
 
+    /**
+     * Wrapper around storage element
+     * Saves and serializes quiz content
+     */
     storeUpdate: function( data ) {
       data = JSON.stringify( data );
       this.storeElement.val( data );
     },
 
     /**
+     * Loads quiz from store and builds the elements
+     */
+    loadFromStore: function() {
+      var quiz = this.store();
+
+      if ( quiz.length > 0 ) {
+        for( var i=0; i < quiz.length; i++) {
+          var question = quiz[i];
+          switch( question.type ) {
+            case 'text':
+              this.buildText( question );
+              break;
+            case 'radios':
+              this.buildRadios( question );
+              break;
+            case 'checkboxes':
+              this.buildCheckboxes( question );
+              break;
+          }
+        }
+      }
+    },
+
+    /**
      * Handles addition of one option/one answer questions
      * @param event, Object
+     * @return Object, newly created element
      */
     textHandler: function( event ) {
       var self = event.data;
-      var tmpl = $( self.options.templates.text ).clone();
+      var tmpl = $( self.element ).find( self.options.templates.text ).clone();
       tmpl.removeClass( 'template' ).show();
       $( self.element ).append( tmpl );
+      return tmpl;
+    },
+
+    /**
+     * Builds a text question
+     * @param Object, question data
+     */
+    buildText: function( data ) {
+      var tmpl = this.textHandler( {data: this} );
+      tmpl.find( '.input' ).val( data.content );
+      tmpl.find( '.option textarea' ).val( data.options[0].content );
     },
 
     /**
      * Handles addition of multiple options/one answer questions
      * @param event, Object
+     * @return Object, newly created element
      */
     radiosHandler: function( event ) {
       var self = event.data;
-      var tmpl = $( self.options.templates.radios ).clone();
+      var tmpl = $( self.element ).find( self.options.templates.radios ).clone();
       tmpl.removeClass( 'template' ).show();
       $( self.element ).append( tmpl );
+      return tmpl;
+    },
+
+    /**
+     * Builds a radios question
+     * @param Object, question data
+     */
+    buildRadios: function( data ) {
+      var tmpl = this.radiosHandler( {data: this} );
+      var self = this;
+
+      tmpl.find( '.option' ).remove();
+      tmpl.find( '.input' ).val( data.content );
+
+      $.each( data.options, function() {
+        var plus = tmpl.find( '.add' );
+        var option = self.addAnswer.call( plus, {data: self} );
+        option.find( '.option-validation input' ).attr( 'checked', this.valid );
+        option.find( '.option-content textarea' ).val( this.content );
+      });
     },
 
     /**
      * Handles addition of multiple options/multiple answers questions
      * @param event, Object
+     * @return Object, newly created element
      */
     checkboxesHandler: function( event ) {
       var self = event.data;
-      var tmpl = $( self.options.templates.checkboxes ).clone();
+      var tmpl = $( self.element ).find( self.options.templates.checkboxes ).clone();
       tmpl.removeClass( 'template' ).show();
       $( self.element ).append( tmpl );
+      return tmpl;
+    },
+
+    /**
+     * Builds a checkboxes question
+     * @param Object, question data
+     */
+    buildCheckboxes: function( data ) {
+      var tmpl = this.checkboxesHandler( {data: this} );
+      var self = this;
+
+      tmpl.find( '.option' ).remove();
+      tmpl.find( '.input' ).val( data.content );
+
+      $.each( data.options, function() {
+        var plus = tmpl.find( '.add' );
+        var option = self.addAnswer.call( plus, {data: self} );
+        option.find( '.option-validation input' ).attr( 'checked', this.valid );
+        option.find( '.option-content textarea' ).val( this.content );
+      });
     },
 
     /**
@@ -111,14 +202,22 @@
     /**
      * Handles answer addition, in case of radios/checkboxes
      * @param event, Object
+     * @return Object, created element
      */
     addAnswer: function( event ) {
+      console.log(this)
+      var self = event.data;
       var template = $(this).parents( '.question' ).attr( 'class' );
       template = template.match( /quiz\-\w+/ )[0]
-      var answer = $( '.template.' + template + ' .option' ).clone();
+      var answer = $( self.element ).find( '.template.' + template + ' .option' ).clone();
       $(this).parents( '.question' ).find( '.question-content' ).append( answer );
+      return answer;
     },
 
+    /**
+     * Callback, gets triggered on quiz builder events
+     * Parses and stores quiz data
+     */
     storeQuiz: function( event ) {
       var self = event.data;
       var store = [];
@@ -185,7 +284,7 @@
 
       // Bind main controls
       $.each( this.options.controls, function( key, ctrl ){
-        $( ctrl ).on( 'click', self, self[ key + 'Handler' ] );
+        $( self.element ).on( 'click', ctrl, self, self[ key + 'Handler' ] );
       });
 
       // Bind radio/checkboxes deletion controls
@@ -206,8 +305,8 @@
    */
   $.fn[pluginName] = function ( options ) {
     return this.each(function () {
-      if ( !$.data( this, 'quiz-options' ) ) {
-        $.data( this, 'quiz-options', new QuizBuilder( this, options ) );
+      if ( !$.data( this, 'quiz-instance' ) ) {
+        $.data( this, 'quiz-instance', new QuizBuilder( this, options ) );
       }
     });
   }

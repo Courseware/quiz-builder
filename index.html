@@ -35,8 +35,97 @@
       <div class="row">
         <div class="twelve columns">
 
+          <div id="demo-load" data-quiz="auto" data-from-store="true">
+            <input type="hidden" class="quiz-store" value='[{"options":[{"valid":true,"content":"Text Answer"}],"content":"Text Question","type":"text"},{"options":[{"valid":true,"content":"Radio Answer Ok"},{"valid":false,"content":"Radio Answer"}],"content":"Radio Question","type":"radios"},{"options":[{"valid":false,"content":"Checkbox Answer Wrong"},{"valid":true,"content":"Answer Answer Ok"}],"content":"Checkbox Question","type":"checkboxes"}]'>
+
+            <h5>
+              Create a new question with:
+            </h5>
+            <a href="#" class="quiz-new-text small button radius">Single Answer</a>
+            <a href="#" class="quiz-new-radios small button radius">Multiple Options &ndash; One Answer</a>
+            <a href="#" class="quiz-new-checkboxes small button radius">Multiple Options &ndash; Multiple Answers</a>
+
+            <hr>
+
+            <div class="quiz-text template question row" style="display: none">
+              <div class="eleven columns question-content">
+                <textarea class="input">Question</textarea>
+
+                <div class="row option">
+                  <div class="twelve columns option-content">
+                    <textarea>Answer</textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="one columns">
+                <p>
+                <a href="#" class="button tiny radius alert delete">&times;</a>
+                </p>
+              </div>
+              <hr>
+            </div>
+
+            <div class="quiz-radios template question row" style="display: none">
+              <div class="eleven columns question-content">
+                <textarea class="input">Question</textarea>
+
+                <div class="row option">
+                  <div class="one columns option-validation">
+                    <input name="unique" type="radio">
+                  </div>
+
+                  <div class="ten columns option-content">
+                    <textarea>Answer</textarea>
+                  </div>
+
+                  <div class="one columns">
+                    <a href="#" class="button tiny radius alert remove">&times;</a>
+                  </div>
+                </div>
+              </div>
+              <div class="one columns">
+                <p>
+                <a href="#" class="button tiny radius alert delete">&times;</a>
+                </p>
+                <p>
+                  <a href="#" class="button tiny radius success add">&plus;</a>
+                </p>
+              </div>
+              <hr>
+            </div>
+
+            <div class="quiz-checkboxes template question row" style="display: none">
+              <div class="eleven columns question-content">
+                <textarea class="input">Question</textarea>
+
+                <div class="row option">
+                  <div class="one columns option-validation">
+                    <input type="checkbox">
+                  </div>
+                  <div class="ten columns option-content">
+                    <textarea>Answer</textarea>
+                  </div>
+                  <div class="one columns">
+                    <a href="#" class="button tiny radius alert remove">&times;</a>
+                  </div>
+                </div>
+              </div>
+              <div class="one columns">
+                <p>
+                  <a href="#" class="button tiny radius alert delete">&times;</a>
+                </p>
+                <p>
+                  <a href="#" class="button tiny radius success add">&plus;</a>
+                </p>
+              </div>
+
+              <hr>
+            </div>
+          </div>
+
           <div id="demo" data-quiz="auto">
-            <input type="hidden" id="quiz-store">
+            <input type="hidden" class="quiz-store">
 
             <h5>
               Create a new question with:
