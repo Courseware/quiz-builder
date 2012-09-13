@@ -1,7 +1,8 @@
 /**
  * jQuery Quiz Builder Plugin - v.0.1
  *
- * (c) 2012, Coursewa.re
+ * Copyright 2012 Stas Suscov
+ * http://coursewa.re
  */
 ;(function ( $, window, undefined ) {
   var pluginName = 'quizBuilder',
