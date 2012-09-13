@@ -16,14 +16,103 @@
   <script src="../src/quiz_builder.js"></script>
 
   <!-- TEST FILES -->
-  <script src="text_question_spec.js"></script>
+  <script src="text_spec.js"></script>
+  <script src="radios_spec.js"></script>
+  <script src="checkboxes_spec.js"></script>
 </head>
 <body>
+  <div id="demo" data-quiz="auto">
+    <input type="hidden" class="quiz-store">
 
-<script>
-  jasmine.getEnv().addReporter(new jasmine.HtmlReporter());
-  jasmine.getEnv().execute();
-</script>
+    <a href="#" class="quiz-new-text small button radius">Single Answer</a>
+    <a href="#" class="quiz-new-radios small button radius">Multiple Options &ndash; One Answer</a>
+    <a href="#" class="quiz-new-checkboxes small button radius">Multiple Options &ndash; Multiple Answers</a>
+
+    <hr>
+
+    <div class="quiz-text template question row" style="display: none">
+      <div class="twelve columns question-content">
+        <textarea class="input">Question</textarea>
+
+        <div class="row option">
+          <div class="eleven offset-by-one columns option-content">
+            <textarea>Answer</textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="twelve columns alignright">
+          <a href="#" class="button tiny radius alert delete">Delete</a>
+        </div>
+      </div>
+
+      <hr>
+    </div>
+
+    <div class="quiz-radios template question row" style="display: none">
+      <div class="twelve columns question-content">
+        <textarea class="input">Question</textarea>
+
+        <div class="row option">
+          <div class="one columns option-validation">
+            <input name="unique" type="radio">
+          </div>
+
+          <div class="nine columns option-content">
+            <textarea>Answer</textarea>
+          </div>
+
+          <div class="two columns">
+            <a href="#" class="button tiny radius alert remove">Remove</a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="nine columns">
+          <a href="#" class="button tiny radius success add">Add a new option</a>
+        </div>
+        <div class="three columns alignright">
+          <a href="#" class="button tiny radius alert delete">Delete</a>
+        </div>
+      </div>
+      <hr>
+
+    </div>
+
+    <div class="quiz-checkboxes template question row" style="display: none">
+      <div class="twelve columns question-content">
+        <textarea class="input">Question</textarea>
+
+        <div class="row option">
+          <div class="one columns option-validation">
+            <input type="checkbox">
+          </div>
+          <div class="nine columns option-content">
+            <textarea>Answer</textarea>
+          </div>
+          <div class="two columns">
+            <a href="#" class="button tiny radius alert remove">Remove</a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="nine columns">
+          <a href="#" class="button tiny radius success add">Add a new option</a>
+        </div>
+        <div class="three columns alignright">
+          <a href="#" class="button tiny radius alert delete">Delete</a>
+        </div>
+      </div>
+
+      <hr>
+    </div>
+  </div>
+
+  <script>
+    jasmine.getEnv().addReporter(new jasmine.HtmlReporter());
+    jasmine.getEnv().execute();
+  </script>
 
 </body>
 </html>
