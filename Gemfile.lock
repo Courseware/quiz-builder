@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/stas/guard-phantomjs-jasmine.git
-  revision: c0b225fe2c3f8b0154e5f2a4c4c45ccc542f77fe
+  revision: 3221a74391a44141f8a9aabc68e5d4dcf83d5ed7
   specs:
     guard-phantomjs-jasmine (0.0.1)
       guard
