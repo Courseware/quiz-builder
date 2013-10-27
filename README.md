@@ -25,8 +25,10 @@ Check `spec` directory for Jasmine tests.
 
 To run those, open `spec/runner.html` in a browser or use `Rake`
 
-  $ bundle update
-  $ bundle exec rake
+```bash
+$ bundle update
+$ bundle exec rake
+```
 
 ## Credits
 
