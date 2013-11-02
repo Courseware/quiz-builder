@@ -110,6 +110,9 @@
   </div>
 
   <script>
+    // Disable slideDown/slideUp effects
+    $.fx.off = true;
+
     jasmine.getEnv().addReporter(new jasmine.HtmlReporter());
     jasmine.getEnv().execute();
   </script>
