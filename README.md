@@ -2,6 +2,8 @@
 
 The jQuery quiz builder I wrote for The Coursewa.re Project.
 
+[![Build Status](https://travis-ci.org/Courseware/quiz-builder.png?branch=master)](https://travis-ci.org/Courseware/quiz-builder)
+
 ## Installation
 
 Download the latest file from `src` directory.
